@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h4>Riccardo Giovenzana</h4>
+    <h1>Gestione Vendite di Un negozio</h1>
+    
+</body>
+<script>
+function calcola_cassa()
+{ 
+    let somma=0;
+    let totale;
+    
+    for(let i=1;i<array.length;i++)
+        somma+=arguments[i]
+    valoreIniziale+=somma
+    document.write("Valore Cassa: ",valoreIniziale,"\t")   
+}
+valoreIniziale=Number(prompt("Insersci il valore di cassa Iniziale"));
+numeroVendite=Number(prompt("Insersci il numero di vendite giornaliere"));
+
+let array = new Array();
+
+for(let i =0;i<numeroVendite;i++)
+{
+    numero=Number(prompt("Quante vendite vuoi inserire?"))
+    for(let i=0;i<=numero;i++)
+    {
+        valore=Number(prompt("Inserisci il valore delle vendite della giornata"))
+        array[i]=valore;
+    }
+    calcola_cassa(valoreIniziale,...array);
+}
+</script>
+</html>

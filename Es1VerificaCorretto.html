@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+</head>
+<style>
+    table,th,td
+    {
+        border: 1px solid black;
+    }
+</style>
+<body>
+    <h4>Riccardo Giovenzana</h4>
+    <h1>Gestione delle Prenotazioni per un Evento</h1>
+    <form id="myForm">
+        <table>
+            <tr>
+                <td>Codice Prenotazione</td>
+                <td><input type="text" id="codice"  placeholder="Inserisci il codice"></td>
+            </tr>
+
+            <tr>
+                <td>Numero di Biglietti</td>
+                <td><input type="number" id="biglietti" min="0" max="10000"></td>
+            </tr>
+
+            <tr>
+                <td><button type="button" onclick="AggiungiPrenotazione()">Aggiungi Prenotazione</button></td>
+                <td><button type="button" onclick="Mostra()">Mostra Prenotazioni</button></td>
+            </tr>
+        </table>
+        <hr>
+    </form>
+
+    <div id="risultato">
+
+    </div>
+    <hr>
+    <div id="BigliettiMaggiori">
+
+    </div>
+    
+</body>
+<script>
+    let clienti = [];
+    function AggiungiPrenotazione()
+    {
+        var codice=document.getElementById("codice").value;
+        var numeroB=document.getElementById("biglietti").value;
+
+        if(numeroB=="" && codice=="")
+        {
+            alert("Codice e numero di biglietti non inseriti")
+        }
+        else if(codice=="" )
+        {
+            alert("Codice non inserito")
+        }
+        else if(numeroB=="" )
+        {
+            alert("Numero biglietti non inserito")
+        }
+        else if(numeroB<=0)
+        {
+            alert("Il numero di biglietti NON può essere negativo, Riprova")
+            document.getElementById("biglietti").value="";
+        } 
+        else
+        {
+            calcolaCosto(numeroB,codice)
+        }
+
+        
+    }
+    function calcolaCosto(numeroB,codice)
+    {
+        let costo1=numeroB*20;
+        let costoTotale;
+        let primoCosto;
+
+        if(numeroB>=1 && numeroB<=4)
+        {
+            costoTotale=costo1 
+        }
+        if(numeroB>=5 && numeroB<=9)
+        {
+            costoTotale=((costo1)-(costo1*0.10))
+        }
+        if(numeroB>=10)
+        {
+            costoTotale=((costo1) - (costo1*0.20)) 
+        
+        }
+        clienti.push({codice:codice,numeroB:numeroB,costoTotale:costoTotale})
+        document.getElementById("codice").value="";
+        document.getElementById("biglietti").value="";
+    }
+
+    function Mostra()
+    {
+        let array=[]
+        let tabella=`<table>
+                <tr>
+                <th>Codice Prenotazione</th>
+                <th>Numero di Biglietti</th>
+                <th>Importo totale</th>
+                </tr>`
+        let riga;
+        var sommaBiglietti=0;
+        for(let cliente of clienti)
+        {
+            riga=`<tr>
+                <td>${cliente.codice}</td>
+                <td>${cliente.numeroB}</td>
+                <td>${cliente.costoTotale} €</td>
+                </tr>`
+            tabella+=riga;
+
+            if(cliente.costoTotale>200)
+            {
+                sommaBiglietti=sommaBiglietti+cliente.costoTotale
+            }
+        }
+        tabella+="</table>"
+        document.getElementById("risultato").innerHTML=tabella;
+        document.getElementById("BigliettiMaggiori").innerText="Totale delle prenotazioni con importo maggiore di 200€: " + sommaBiglietti+ " €";
+
+       
+
+    }
+</script>
+</html>
