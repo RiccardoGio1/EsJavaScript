@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <h1>Gestione delle prenotazioni di una biblioteca</h1>
+    <hr>
+</head>
+<style>
+table,th,td
+{
+    border: 1px solid black;
+}
+</style>
+<body>
+
+<form id="myForm">
+    <table>
+
+        <tr>
+            <td>ID utente</td>
+            <td><input type="text" id="id"  placeholder="Inserisci il tuo ID"></td>
+        </tr>
+
+        <tr>
+            <td>Titolo del libro</td>
+            <td><input type="text" id="titolo"></td>
+        </tr>
+
+        <tr>
+            <td>Numero di giorni</td>
+            <td><input type="number" id="ngiorni" min="1" max="10000"></td>
+        </tr>
+
+        <tr>
+            <td><button type="button" onclick="addBooking()">Aggiungi Prenotazione</button></td>
+        </tr>
+
+    </table>
+    <hr>
+</form>
+
+<div id="risultato">
+</div>
+<div id="riepilogo">
+</div>
+</body>
+<script>
+
+let clienti = [];
+let riepilogo = [];
+
+function addBooking()
+{
+    var id=document.getElementById("id").value;
+    var titolo=document.getElementById("titolo").value;
+    var giorni=document.getElementById("ngiorni").value;
+
+    if(id=="" || titolo=="" || giorni=="")
+    {
+        alert("Errore di Inserimento")
+    }
+    else
+    {
+    clienti.push({id:id,titolo:titolo,giorni:giorni}) 
+
+    renderTable(id,titolo,giorni)
+    updateSummary()
+    document.getElementById("id").value="";
+    document.getElementById("titolo").value="";
+    document.getElementById("ngiorni").value="";   
+    }
+}
+
+
+function renderTable()
+{
+   
+    let tabella=`<table>
+            <tr>
+            <th>ID utente</th>
+            <th>Titolo del libro</th>
+            <th>Numero di giorni</th>
+            </tr>`
+    let riga;
+   
+    for(let cliente of clienti)
+    {
+        riga=`<tr>
+            <td>${cliente.id}</td>
+            <td>${cliente.titolo}</td>
+            <td>${cliente.giorni}</td>
+            </tr>`
+        tabella+=riga;
+    }
+    tabella+="</table>"
+    document.getElementById("risultato").innerHTML=tabella;
+}
+
+function updateSummary()
+{
+
+    var id1=document.getElementById("id").value;
+    var giorni1=document.getElementById("ngiorni").value;
+
+    let trovato=false
+
+    for(let utente of riepilogo)
+    {
+        if(utente.id==id1)
+        {
+            utente.giorni+=parseInt(giorni1)
+            trovato=true
+        }
+    }
+
+    if(trovato==false)
+    {
+        riepilogo.push({id:id1,giorni:parseInt(giorni1)})
+    }
+
+    let tabella2=`<table>
+            <tr>
+            <th>ID utente</th>
+            <th>Totale giorni</th>
+            </tr>`
+
+    for(let cliente of riepilogo)
+    {
+        riga2=`<tr>
+            <td>${cliente.id}</td>
+            <td>${cliente.giorni}</td>
+            </tr>`
+        tabella2+=riga2;
+        
+    }
+    document.getElementById("riepilogo").innerHTML= tabella2;
+}
+</script>
+</html>

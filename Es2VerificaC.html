@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <h1>Gestione delle spese di un villaggio</h1>
+    <hr>
+</head>
+<script>
+    let somma=500
+    function calcola_budget()
+    {
+        for(let i=1;i<arguments.length;i++)
+        {
+            if(arguments[0]=="-")
+            {
+                somma=somma-arguments[i]
+            }
+            if(arguments[0]=="+")
+            {
+                somma=somma+arguments[i]
+            }
+        }
+        return somma
+    }
+
+calcola_budget("-",50,30,20)
+calcola_budget("-",100,50)
+calcola_budget("-",70,30)
+document.write("Il budget finale è: ",somma," euro <br>")
+</script>
+</html>
